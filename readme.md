@@ -71,11 +71,13 @@ docker compose --env-file .env.local -f nginx-proxy-manager/docker-compose.nginx
 ```
 Al correr con nginx proxy manager se debe configurar el nginx desde la web de nginx proxy manager los proxy pass correspondientes, esto facilita la configuracion para un desa, pero tambien genera que se requiera una configuracion inicial a mano
 
-# Correr todo con nginx 
+# Correr todo localment con nginx 
 ``` sh
 docker compose --env-file .env.local -f nginx/docker-compose.nginx.yaml -f jenkins/docker-compose.jenkins.yaml -f minio/docker-compose.minio.yaml -f registry/docker-compose.registry.yaml up 
 -d
 ```
+
+# los servidores individuales deben correr en traefik o usar un nginx con otra config ya que el nginx tiene configurado los proxy pass de todos y falla si no existen los demas contenedores
 
 # Servidor Registry
 Se debe ejecutar docker compose de esta forma 
@@ -95,6 +97,7 @@ Se debe ejecutar docker compose de esta forma
 docker compose -f docker-compose.traefik.yaml -f jenkins/docker-compose.jenkins.yaml up -d
 ```
 
+En las env esta el valor DOCKER_DATA_FOLDER que seria la ruta donde se guardara la data de los contenedores, estos datos se pueden hacer backups y restaurar en otro servidor
 
 # al final
 tambien queremos instalar una herramienta similar a Open Shift, de momento estamos probando https://coolify.io/docs/installation
