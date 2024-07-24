@@ -1,0 +1,6 @@
+version: 0.1
+http:
+  headers:
+    Access-Control-Allow-Origin: ['http://intrasiit.lomasdezamora.gov.ar:9099']
+    Access-Control-Allow-Methods: ['HEAD', 'GET', 'OPTIONS']
+    Access-Control-Allow-Headers: ['Authorization']

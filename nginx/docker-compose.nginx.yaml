@@ -1,0 +1,16 @@
+services:
+  nginx:
+    image: nginx:1-alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ${DOCKER_DEPLOY_FOLDER}/nginx/config:/etc/nginx/conf.d
+      - ${DOCKER_DEPLOY_FOLDER}/nginx/config.nginx/:/etc/nginx/
+      - ${DOCKER_DEPLOY_FOLDER}/nginx/letsencrypt:/etc/letsencrypt
+      - ${DOCKER_DATA_FOLDER}/nginx/html:/usr/share/nginx/html
+    networks:
+      - proxy
+networks:
+  proxy:
+    driver: bridge

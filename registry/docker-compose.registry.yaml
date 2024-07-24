@@ -1,0 +1,32 @@
+services:
+  registry-server:
+    image: registry:2.8.2
+    restart: always
+    volumes:
+      - ${DOCKER_DATA_FOLDER}/registry/data:/var/lib/registry
+      - ${DOCKER_CONFIG_FOLDER}/registry/config.yml:/etc/docker/registry/config.yml
+    container_name: registry-server
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.registry.rule=Host(`${DOCKER_REGISTRY_HOSTNAME}`)"
+    networks:
+      - proxy
+
+  registry-ui:
+    image: joxit/docker-registry-ui:latest
+    container_name: registry-ui
+    environment:
+      - REGISTRY_TITLE=My Private Docker Registry
+      - NGINX_PROXY_PASS_URL=http://registry-server:5000
+      - SINGLE_REGISTRY=true
+      - DELETE_IMAGES=true
+    depends_on:
+      - registry-server
+    networks:
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.registryui.rule=Host(`${DOCKER_REGISTRY_HOSTNAME_UI}`)
+networks:
+  proxy:
+    driver: bridge
