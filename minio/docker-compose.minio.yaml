@@ -6,10 +6,12 @@ services:
       - MINIO_ROOT_USER=${MINIO_ROOT_USER}
       - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
       - MINIO_BROWSER_REDIRECT_URL=${MINIO_BROWSER_REDIRECT_URL}
-    image: quay.io/minio/minio:latest
+    image: quay.io/minio/minio:RELEASE.2024-07-16T23-46-41Z-cpuv1
     volumes:
       - ${DOCKER_DATA_FOLDER}/minio/data:/data
     restart: unless-stopped
+    ports:
+      - 9000:9000
     expose:
       - "9000"
       - "9001"

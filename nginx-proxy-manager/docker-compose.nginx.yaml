@@ -12,6 +12,9 @@ services:
       - ${DOCKER_CONFIG_FOLDER}/npm/letsencrypt:/etc/letsencrypt
     networks:
       - proxy
+      - database
 networks:
+  database:
+    external: true
   proxy:
     driver: bridge
